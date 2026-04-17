@@ -79,25 +79,37 @@
                 <div class="page-content">
                     <div class="container-fluid">
                         
-                        <h1>Resumen de tu Cuenta</h1>
+                        <h1>Datos de tu Cuenta</h1>
                         <p>Nombre: {{ current_user.name }}</p>
-                        <p>Número de cuenta: {{ account.number }}</p>
+                        <p>Numero de cuenta: {{ account.number }}</p>
+                        <p>Total Cuenta:</p> 
+                        <p>
+                            {% set balance = namespace(total=0) %}
+                                {% for t in account.transaction %}
+                                    {% if t.type.name == 'INCOME' %}
+                                        {% set balance.total = balance.total + t.amount %}
+                                     {% elif t.type.name == 'EXPENSE' %}
+                                        {% set balance.total = balance.total - t.amount %}
+                                    {% endif %}
+                            {% endfor %}
+                            {{ balance.total }}
+                        </p>
 
                         <br>
-
                         <h2>Transacciones</h2>
-                        <table>
-                            <thead>
+                        <table class="table">
+
+                            <thead class="table-light">
                                 <tr>
                                     <th>ID</th>
                                     <th>Fecha</th>
                                     <th>Descripción</th>
                                     <th>Tipo</th>
                                     <th>Monto</th>
-                                </tr>
+                                </tr> 
                             </thead>
-                            <tbody>
-                                {% for t in account.transaction %}
+                                <tbody>
+                                    {% for t in account.transaction %}
                                 <tr>
                                     <td>{{ t.id }}</td>
                                     <td>{{ t.date }}</td>
@@ -109,10 +121,13 @@
                                 <tr>
                                     <td colspan="5">No hay transacciones registradas.</td>
                                 </tr>
-                                {% endfor %}
-                            </tbody>
+                                {% endfor %}   
+                                </tbody>
                         </table>
-
+                        <div style="display: flex; justify-content: space-between;">
+                            <button type="button" class="btn btn-outline-success">Añadir Transaccion</button>
+                            <button type="button" class="btn btn-outline-danger">Eliminar Transaccion</button>
+                        </div>
                     </div>  
                 </div>
                 

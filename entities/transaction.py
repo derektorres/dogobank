@@ -29,7 +29,7 @@ class Transaction():
                     row["description"], 
                     row["date"], 
                     row["amount"], 
-                    row["type"]
+                    TransactionType(row["type"])
                 ))
             cursor.close()
             connection.close()
