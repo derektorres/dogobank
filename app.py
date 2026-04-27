@@ -3,6 +3,7 @@ from entities.user import User
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from dotenv import load_dotenv
 from entities.account import Account
+from entities.log import Log
 import os
 
 load_dotenv()
@@ -38,11 +39,13 @@ def create_user():
     if User.check_email_exists(email):
         return jsonify({"success": False, "message": "El correo electrónico ingresado ya se encuentra registrado."}), 409
 
-    if User.save(name, email, password):
+    new_user_id = User.save(name, email, password)
+
+    if new_user_id:
+        Log.save_log(id_user=new_user_id, description="creacion de cuenta exitoso", type= 2)
         return jsonify({"success": True, "message": "Su cuenta fue creada correctamente."}), 201
     else:
         return jsonify({"success": False, "message": "Ocurrió un error al crear su cuenta. Intente de nuevo"}), 500
-
 
 
 @app.route('/api/login', methods=['POST'])
@@ -54,11 +57,18 @@ def login():
 
     user = User.check_login(email, password)
     if user:
-        login_user(user)
-        return jsonify({
-            "success": True,
-            "message": "Sesion Iniciada Correctamente"  
-        }), 200
+        if user.is_active == 1:
+            login_user(user)
+            Log.save_log(id_user=user.id, description="Inicio de sesión exitoso", type= 1)
+            return jsonify({
+                "success": True,
+                "message": "Sesion Iniciada Correctamente"  
+            }), 200
+        else:
+            return jsonify({
+                "success": False,
+                "message": "El perfil esta desactivado"
+            })
     else:
         return jsonify({
             "success": False,

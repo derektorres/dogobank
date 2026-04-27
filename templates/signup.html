@@ -9,7 +9,7 @@
  
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/site/favicon.png')}}">
 
-        <script src="{{ url_for('static', filename='js/dogo/signup.js')}}"></script>
+       
         <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <link href="{{ url_for('static', filename='css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ url_for('static', filename='css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
@@ -101,7 +101,7 @@
                                             </div>
                                            
                                             <div class="mt-5 text-center">
-                                                <p>¿Ya eres cliente? <br><a href="#" class="fw-medium text-primary"> Inicia Sesion </a> </p>
+                                                <p>¿Ya eres cliente? <br><a href="{{url_for('index')}}" class="fw-medium text-primary"> Inicia Sesion </a> </p>
                                             </div>
                                         </div>
                                     </div>
@@ -126,6 +126,7 @@
         <script src="{{ url_for('static', filename='libs/node-waves/waves.min.js')}}"></script>
 
         <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="{{ url_for('static', filename='js/dogo/signup.js')}}"></script>
 
     </body>
