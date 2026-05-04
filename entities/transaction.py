@@ -1,5 +1,4 @@
 from datetime import datetime
-from entities.user import User
 from persistence.db import get_connection
 import pymysql
 from enums.transaction_type import TransactionType

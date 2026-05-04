@@ -18,9 +18,9 @@ class Log:
             cursor = connection.cursor()
             
 
-            sql = "INSERT INTO log (id_user, description, type) VALUES (%s, %s, %s)"
-            cursor.execute(sql, (id_user, description, type))
-            connection.commit()
+            sql = "INSERT INTO log (id_user, description, type) VALUES (%s, %s, %s)" #
+            cursor.execute(sql, (id_user, description, type)) 
+            connection.commit() 
 
             cursor.close()
             connection.close()
@@ -28,3 +28,4 @@ class Log:
         except Exception as ex:
             print(f"Error saving log:{ex}")
             return False
+        
