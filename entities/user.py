@@ -17,7 +17,9 @@ class User (UserMixin):
         self.password = password
         self.profile = profile
         self.permission = permission
-        self._is_active = is_active
+        self._is_active = bool(is_active) #ESTO ES PA FORZAR QUE EL USUARIO ESTE ACTIVO 
+
+        
         
     @property
     def is_active(self):
